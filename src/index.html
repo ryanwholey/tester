@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <h1>Hello human</h1>
+        <p class="count-tag"> The count is...</p>
+        <button class="count-button" type="button">Change Count</button>
+        <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+        <script>
+            $(function() {
+                $('.count-button').on('click', function() {
+                    $.get('http://localhost:8080/data')
+                        .then(function(data) {
+                            $('.count-tag').text('The count is ' + data.count);
+                        })
+                        .catch(function(err) {
+                            console.error(err);
+                        });
+                });
+            });
+        </script>
+    </body>
+</html>
