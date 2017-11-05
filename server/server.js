@@ -3,7 +3,7 @@ var exphbs  = require('express-handlebars');
 var express = require('express');
 var path = require('path');
 var morgan = require('morgan');
-var _ = require('lodash')
+var _ = require('lodash');
 
 var app = express();
 
@@ -25,11 +25,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse and set reqData
 app.use(function(req, res, next) {
 	req.reqData = {};
+	if (
+		req.headers['content-type'] !== 'application/json' && 
+		req.headers['content-type'].indexOf('urlencoded') === -1
+	){
+		res.status(400).send('404 - bad content type');
+		return;
+	}
 
 	if (req.method === 'GET') {
 		req.reqData = req.query;
 	} else if (req.method === 'POST') {
 		req.reqData = _.assign({}, req.body);
+	} else {
+		res.status(400).send('404 - bad http method');
+		return;
 	}
 
 	next();

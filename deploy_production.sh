@@ -9,3 +9,6 @@ npm install --production
 
 echo "starting server..."
 node_modules/.bin/forever start server/server.js
+sleep 2
+node_modules/.bin/forever list
+
